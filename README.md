@@ -1,126 +1,208 @@
-#Student Management Application — AWS + Docker + MySQL RDS
+# 🚀 Student Management Application — AWS + Docker + MySQL RDS
 
-A full-stack Student Management Application deployed on an AWS EC2 Ubuntu server using Docker, with MySQL hosted on Amazon RDS.
+## 📌 Project Overview
 
-The application is divided into:
+This project is a full-stack Student Management Application deployed on AWS using Docker and Amazon RDS MySQL.
 
-Frontend — Vite-based web application
+## 🏗️ Architecture
 
-Backend — Spring Boot application
-
-Database — Amazon RDS for MySQL
-
-Deployment — Docker containers running on AWS EC2
-
-1. Project Architecture
-
-flowchart LR
-    U[User / Browser] -->|HTTP :80| F[Frontend Container]
-    F -->|REST API :8080| B[Backend Container]
-    B -->|MySQL :3306| R[(Amazon RDS MySQL)]
-    EC2[AWS EC2 Ubuntu] --> F
-    EC2 --> B
-    SG[Security Groups] -.controls access.-> EC2
-    SG -.controls DB access.-> R
-
-Request Flow
-
-User
-  ↓
-EC2 Public IP :80
-  ↓
+```text
+User / Browser
+      ↓
 Frontend Docker Container
-  ↓
-Backend API :8080
-  ↓
-Amazon RDS MySQL :3306
-  ↓
-student_db
-
-2. AWS Resources Used
-
-Resource
-
-Purpose
-
-Amazon EC2
-
-Hosts the Docker containers
-
-Ubuntu
-
-Operating system of the EC2 server
-
+      ↓
+Backend Docker Container
+      ↓
 Amazon RDS MySQL
+      ↓
+student_db
+☁️ AWS Services Used
+1. Amazon EC2
 
-Managed relational database
+Used to host the Docker containers.
 
-Security Group
+2. Amazon RDS
 
-Controls EC2 and RDS network access
+Used as the managed MySQL database.
 
+3. Security Groups
+
+Used to control network access.
+
+🐳 Docker Deployment
+Backend
+docker build -t <username>/student-backend .
+docker run -d --name backend -p 8080:8080 <username>/student-backend
+Frontend
+docker build -t <username>/student-frontend .
+docker run -d --name frontend -p 80:80 <username>/student-frontend
+🗄️ Database Configuration
+MySQL
+   ↓
+RDS Endpoint
+   ↓
+Port 3306
+   ↓
+student_db
+🔄 Application Flow
+Browser
+   ↓
+Frontend :80
+   ↓
+Backend :8080
+   ↓
+RDS MySQL :3306
+🔐 Security
+Database password is not stored in GitHub.
+.env files are added to .gitignore.
+SSH access is controlled through Security Groups.
+RDS MySQL access is restricted to the required source.
+🧪 Verification
+docker ps
+docker images
+docker logs backend
+
+MySQL:
+
+SHOW DATABASES;
+USE student_db;
+SHOW TABLES;
+SELECT * FROM users;
+📚 What I Learned
+AWS EC2
+Amazon RDS MySQL
 Docker
+Linux
+Git & GitHub
+Security Groups
+Backend deployment
+Frontend deployment
+Database connectivity
+Cloud networking
+👨‍💻 Author
 
-Containerizes frontend and backend
+Yash Pawar
 
-Git
+Cloud & DevOps | AWS | Linux | Docker | Git
 
-Downloads/updates application source code
 
-Example EC2 Configuration
+**हे direct `README.md` मध्ये paste केल्यावर GitHub वर `#` heading मोठी, `##` त्यापेक्षा छोटी आणि `###` त्यापेक्षा छोटी दिसेल.**
+ekach file madhe de
 
-OS: Ubuntu
+हो भाऊ 👍 एकाच README.md file मध्ये पूर्ण content देतो. खालील पूर्ण code direct README.md मध्ये copy-paste कर. GitHub वर headings proper मोठ्या दिसतील.
 
-Instance type: t3.large / use the instance type actually selected
+# 🚀 Student Management Application — AWS + Docker + MySQL RDS
 
-Storage: 15 GB or as required
+A full-stack Student Management Application deployed on **AWS EC2** using **Docker**, with **MySQL hosted on Amazon RDS**.
 
-Key Pair: Required for SSH access
+---
 
-Security Group: SSH + application ports
+## 📌 Project Overview
 
-Keep the actual EC2 type and storage in sync with the instance you really used.
+This project demonstrates the deployment of a full-stack student management application using cloud and DevOps technologies.
 
-3. Required Ports
+The application consists of:
 
+- Frontend — Vite-based web application
+- Backend — Spring Boot application
+- Database — Amazon RDS MySQL
+- Deployment — Docker containers
+- Server — AWS EC2 Ubuntu
+- Version Control — Git & GitHub
+
+---
+
+# 🏗️ Project Architecture
+
+```text
+                    ┌─────────────────┐
+                    │   User / Browser │
+                    └────────┬────────┘
+                             │
+                             │ HTTP :80
+                             ▼
+                  ┌──────────────────────┐
+                  │   AWS EC2 - Ubuntu   │
+                  │                      │
+                  │ ┌──────────────────┐ │
+                  │ │ Frontend Docker  │ │
+                  │ │    Container     │ │
+                  │ │      :80         │ │
+                  │ └────────┬─────────┘ │
+                  │          │            │
+                  │          │ API :8080  │
+                  │          ▼            │
+                  │ ┌──────────────────┐ │
+                  │ │ Backend Docker   │ │
+                  │ │    Container     │ │
+                  │ │      :8080       │ │
+                  │ └────────┬─────────┘ │
+                  └──────────┼───────────┘
+                             │
+                             │ MySQL :3306
+                             ▼
+                  ┌──────────────────────┐
+                  │   Amazon RDS MySQL   │
+                  │                      │
+                  │     student_db       │
+                  └──────────────────────┘
+🔄 Application Flow
+User / Browser
+      ↓
+AWS EC2 Public IP :80
+      ↓
+Frontend Docker Container
+      ↓
+Backend Docker Container :8080
+      ↓
+Amazon RDS MySQL :3306
+      ↓
+student_db
+☁️ AWS Services Used
+AWS Service	Purpose
+Amazon EC2	Hosts Docker containers
+Amazon RDS	Managed MySQL database
+Security Groups	Controls inbound/outbound access
+VPC	Provides networking environment
+Subnets	Provides network segmentation
+💻 EC2 Configuration
+
+Example configuration:
+
+Operating System : Ubuntu
+Instance Type    : t3.large
+Storage          : 15 GB
+Database         : Amazon RDS MySQL
+
+Use the actual EC2 instance type and storage configured in your AWS account.
+
+🔐 Security Group Configuration
 EC2 Security Group
 
-Allow:
+Allow the required ports:
 
 22    → SSH
 80    → Frontend
 8080  → Backend API
-
-For learning/testing, these can be opened according to your lab requirement. For production, restrict access wherever possible.
-
 RDS Security Group
 
 Allow:
 
 3306 → MySQL
 
-Prefer allowing port 3306 from the EC2 Security Group, rather than opening MySQL to the whole internet.
+For better security, allow MySQL access from the EC2 Security Group instead of opening port 3306 to the entire internet.
 
-4. Step 1 — Connect to EC2
+🖥️ Step 1 — Connect to EC2
 
-SSH into the Ubuntu server:
+Connect to the Ubuntu EC2 instance using SSH:
 
 ssh -i <key-file.pem> ubuntu@<EC2-PUBLIC-IP>
 
-Update packages:
+Update the system:
 
 sudo apt update
 sudo apt upgrade -y
-
-5. Step 2 — Install Required Packages
-
-Install Git:
-
-sudo apt install git -y
-
-Install MySQL client:
-
-sudo apt install mysql-client -y
+🐳 Step 2 — Install Docker
 
 Install Docker:
 
@@ -130,77 +212,89 @@ Start Docker:
 
 sudo systemctl start docker
 
-Enable Docker at boot:
+Enable Docker:
 
 sudo systemctl enable docker
 
-Check Docker:
+Check Docker version:
 
 docker --version
 
 Check Docker service:
 
 sudo systemctl status docker
+🔧 Step 3 — Install Git
 
-If required, use Docker with sudo:
+Install Git:
 
-sudo docker ps
+sudo apt install git -y
 
-6. Step 3 — Optional Docker Cleanup
+Check Git:
 
-Before starting a fresh lab deployment, existing containers/images can be checked.
+git --version
+🗄️ Step 4 — Install MySQL Client
 
-List containers:
+Install MySQL client:
+
+sudo apt install mysql-client -y
+
+Check installation:
+
+mysql --version
+🧹 Step 5 — Check Existing Docker Resources
+
+Check running containers:
+
+docker ps
+
+Check all containers:
 
 docker ps -a
 
-List images:
+Check Docker images:
 
 docker images
 
-To remove all existing containers:
+If you intentionally want to remove all existing containers:
 
 docker rm -f $(docker ps -aq)
 
-To remove all existing images:
+Remove all Docker images:
 
 docker rmi -f $(docker images -aq)
 
-These cleanup commands are destructive. Use them only when you intentionally want to remove the existing Docker resources.
+⚠️ These commands are destructive. Use them only when you want to clean the Docker environment completely.
 
-7. Step 4 — Create Amazon RDS MySQL Database
+🗃️ Step 6 — Create Amazon RDS MySQL Database
 
 Create an Amazon RDS MySQL database.
 
 Example configuration:
 
-Engine: MySQL
-Database name: student_db
-Port: 3306
-Username: admin
-Password: <YOUR-DB-PASSWORD>
+Engine        : MySQL
+Database      : student_db
+Port          : 3306
+Username      : admin
+Password      : <YOUR-DB-PASSWORD>
 
-After RDS is created, copy the RDS endpoint.
+After creating the RDS database, copy the RDS endpoint.
 
 Example:
 
-<rds-endpoint>.ap-south-1.rds.amazonaws.com
+student-db.xxxxxxxxx.ap-south-1.rds.amazonaws.com
+🔗 Step 7 — Connect EC2 to RDS MySQL
 
-Do not commit the real password to GitHub.
-
-8. Step 5 — Test RDS Connection From EC2
-
-Connect to the MySQL RDS instance:
+From the EC2 server:
 
 mysql -h <RDS-ENDPOINT> -u admin -p
 
-Enter the RDS password when prompted.
+Enter the database password.
 
 Check databases:
 
 SHOW DATABASES;
 
-Create the application database if it was not created during RDS setup:
+Create the database if required:
 
 CREATE DATABASE student_db;
 
@@ -211,28 +305,40 @@ SHOW DATABASES;
 Exit MySQL:
 
 EXIT;
+🧪 Step 8 — Test RDS Connection
 
-9. Step 6 — Clone the Git Repository
+Connect again:
 
-Clone the application:
+mysql -h <RDS-ENDPOINT> -u admin -p
+
+Then:
+
+USE student_db;
+
+Check tables:
+
+SHOW TABLES;
+📥 Step 9 — Clone Git Repository
+
+Clone the project:
 
 git clone <YOUR-GITHUB-REPOSITORY-URL>
-
-Enter the project directory:
-
-cd <PROJECT-DIRECTORY>
 
 Check files:
 
 ls
 
+Enter project directory:
+
+cd <PROJECT-DIRECTORY>
+
 Expected structure:
 
-project/
+student-management-app/
+│
 ├── backend/
 └── frontend/
-
-10. Step 7 — Configure Backend Database Connection
+⚙️ Step 10 — Configure Backend
 
 Go to backend:
 
@@ -242,9 +348,7 @@ Open Spring Boot configuration:
 
 vim src/main/resources/application.properties
 
-Configure the database connection.
-
-Example:
+Configure database connection:
 
 spring.datasource.url=jdbc:mysql://<RDS-ENDPOINT>:3306/student_db?useSSL=false&serverTimezone=UTC
 spring.datasource.username=admin
@@ -252,48 +356,32 @@ spring.datasource.password=${DB_PASSWORD}
 
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
+🔑 Database Password
 
-Important
-
-Replace:
-
-<RDS-ENDPOINT>
-
-with the actual RDS endpoint.
-
-Do not put the real database password in a public Git repository.
-
-For local/testing use, you can provide it through an environment variable:
+Set the password using an environment variable:
 
 export DB_PASSWORD='<YOUR-DB-PASSWORD>'
 
-Then the Spring Boot application reads:
+This avoids directly storing the database password inside GitHub.
 
-spring.datasource.password=${DB_PASSWORD}
+🔗 JDBC Connection
 
-11. Example JDBC URL
+The database connection follows this format:
 
 jdbc:mysql://<RDS-ENDPOINT>:3306/student_db
 
 Meaning:
 
-jdbc:mysql://
-        ↓
-MySQL protocol
-        ↓
-<RDS-ENDPOINT>
-        ↓
-RDS server
-        ↓
-3306
-        ↓
-MySQL port
-        ↓
+jdbc:mysql
+     ↓
+MySQL Database
+     ↓
+RDS Endpoint
+     ↓
+Port 3306
+     ↓
 student_db
-        ↓
-Application database
-
-12. Step 8 — Build Backend Docker Image
+🐳 Step 11 — Build Backend Docker Image
 
 From the backend directory:
 
@@ -306,18 +394,17 @@ docker build -t myusername/student-backend .
 Check image:
 
 docker images
+▶️ Step 12 — Run Backend Container
 
-13. Step 9 — Run Backend Container
-
-Run the backend:
+Run the backend container:
 
 docker run -d \
-  --name backend \
-  -p 8080:8080 \
-  -e DB_PASSWORD='<YOUR-DB-PASSWORD>' \
-  <DOCKERHUB-USERNAME>/student-backend
+--name backend \
+-p 8080:8080 \
+-e DB_PASSWORD='<YOUR-DB-PASSWORD>' \
+<DOCKERHUB-USERNAME>/student-backend
 
-Check running containers:
+Check container:
 
 docker ps
 
@@ -329,56 +416,44 @@ Follow live logs:
 
 docker logs -f backend
 
-The backend should now be available through:
+Backend URL:
 
 http://<EC2-PUBLIC-IP>:8080
+🔍 Step 13 — Backend Troubleshooting
 
-14. Step 10 — Backend Troubleshooting
-
-If the backend container is not running:
+Check all containers:
 
 docker ps -a
 
-Check logs:
+Check backend logs:
 
 docker logs backend
 
-Check whether port 8080 is being used:
+Check port 8080:
 
 sudo ss -tulpn | grep 8080
 
-Common issues:
+If backend cannot connect to RDS, check:
 
-RDS connection failed
+✓ RDS Endpoint
+✓ RDS Username
+✓ RDS Password
+✓ RDS Status
+✓ RDS Security Group
+✓ EC2 Security Group
+✓ Port 3306
+✓ Database Name
+🌐 Step 14 — Configure Frontend
 
-Check:
-
-RDS endpoint
-RDS username
-RDS password
-RDS status
-Security Group port 3306
-EC2 → RDS network connectivity
-
-Backend is running but browser cannot access it
-
-Check:
-
-EC2 Security Group → TCP 8080
-Docker port mapping → 8080:8080
-Application listening port → 8080
-
-15. Step 11 — Configure Frontend
-
-Go to the frontend directory:
+Go to frontend:
 
 cd ../frontend
 
-Open the environment file:
+Open environment file:
 
 vim .env
 
-For a Vite application, configure:
+Configure:
 
 VITE_API_URL=http://<EC2-PUBLIC-IP>:8080/api
 
@@ -386,11 +461,9 @@ Example:
 
 VITE_API_URL=http://13.XXX.XXX.XXX:8080/api
 
-Use the actual backend API path used by your application. If your backend endpoints do not contain /api, remove /api.
+Use the actual API path configured in the backend.
 
-Check the frontend source before building to confirm the environment variable name and API path.
-
-16. Step 12 — Build Frontend Docker Image
+🐳 Step 15 — Build Frontend Docker Image
 
 From the frontend directory:
 
@@ -403,53 +476,64 @@ docker build -t myusername/student-frontend .
 Check images:
 
 docker images
-
-17. Step 13 — Run Frontend Container
+▶️ Step 16 — Run Frontend Container
 
 Run:
 
 docker run -d \
-  --name frontend \
-  -p 80:80 \
-  <DOCKERHUB-USERNAME>/student-frontend
+--name frontend \
+-p 80:80 \
+<DOCKERHUB-USERNAME>/student-frontend
 
 Check:
 
 docker ps
+🌍 Step 17 — Open Application
 
-Open in browser:
-
-http://<EC2-PUBLIC-IP>
-
-18. Step 14 — Verify the Complete Application
-
-Frontend
+Open the EC2 public IP in browser:
 
 http://<EC2-PUBLIC-IP>
 
-Backend
+The frontend should load.
 
-http://<EC2-PUBLIC-IP>:8080
-
-Database
-
-RDS MySQL
-    ↓
-student_db
-
-The complete flow should be:
-
-Browser
-   ↓
-Frontend :80
-   ↓
-Backend :8080
-   ↓
-RDS MySQL :3306
-   ↓
-student_db
-
-19. Step 15 — Verify Data in MySQL
+🔄 Complete Request Flow
+                         INTERNET
+                            │
+                            ▼
+                    ┌───────────────┐
+                    │    Browser    │
+                    └───────┬───────┘
+                            │
+                         Port 80
+                            │
+                            ▼
+              ┌──────────────────────────┐
+              │       AWS EC2            │
+              │        Ubuntu            │
+              │                          │
+              │  ┌────────────────────┐  │
+              │  │ Frontend Container │  │
+              │  │       Port 80      │  │
+              │  └──────────┬─────────┘  │
+              │             │            │
+              │          API Call         │
+              │             │            │
+              │             ▼            │
+              │  ┌────────────────────┐  │
+              │  │ Backend Container  │  │
+              │  │      Port 8080     │  │
+              │  └──────────┬─────────┘  │
+              └─────────────┼────────────┘
+                            │
+                         Port 3306
+                            │
+                            ▼
+                 ┌─────────────────────┐
+                 │   Amazon RDS MySQL  │
+                 │                     │
+                 │     student_db      │
+                 └─────────────────────┘
+🗄️ Step 18 — Verify Database
 
 Connect to RDS:
 
@@ -459,61 +543,72 @@ Select database:
 
 USE student_db;
 
-Check tables:
+Show tables:
 
 SHOW TABLES;
 
-Check student/user data:
+Check data:
 
 SELECT * FROM users;
 
-Replace users with the actual table name created by your application.
+Replace users with the actual table name used by the application.
 
-20. Useful Docker Commands
-
-Show running containers
-
+🐳 Useful Docker Commands
+Check Running Containers
 docker ps
-
-Show all containers
-
+Check All Containers
 docker ps -a
-
-Show images
-
+Check Images
 docker images
-
-Stop container
-
+Stop Container
 docker stop backend
-
-Start container
-
+Start Container
 docker start backend
-
-Restart container
-
+Restart Container
 docker restart backend
-
-Remove container
-
+Remove Container
 docker rm -f backend
-
-View logs
-
+View Logs
 docker logs backend
-
-Follow logs
-
+Follow Logs
 docker logs -f backend
+📦 Docker Image and Container Concept
+Dockerfile
+    ↓
+docker build
+    ↓
+Docker Image
+    ↓
+docker run
+    ↓
+Docker Container
 
-21. Git Workflow
+Backend:
 
-Check current branch:
+Backend Source Code
+       ↓
+   Dockerfile
+       ↓
+Student Backend Image
+       ↓
+Backend Container
+       ↓
+Port 8080
 
-git branch
+Frontend:
 
-Check changes:
+Frontend Source Code
+       ↓
+   Dockerfile
+       ↓
+Student Frontend Image
+       ↓
+Frontend Container
+       ↓
+Port 80
+🔀 Git Workflow
+
+Check Git status:
 
 git status
 
@@ -521,28 +616,31 @@ Pull latest code:
 
 git pull origin main
 
-Add files:
+Add changes:
 
 git add .
 
 Commit:
 
-git commit -m "Deploy student application using Docker and AWS RDS"
+git commit -m "Deploy student management application using Docker and AWS RDS"
 
 Push:
 
 git push origin main
 
-If the branch is new:
+For a new branch:
 
 git push --set-upstream origin main
-
-22. Recommended Git Repository Structure
-
+📁 Project Structure
 student-management-app/
 │
 ├── backend/
 │   ├── src/
+│   │   └── main/
+│   │       ├── java/
+│   │       └── resources/
+│   │           └── application.properties
+│   │
 │   ├── Dockerfile
 │   ├── pom.xml
 │   └── README.md
@@ -556,42 +654,27 @@ student-management-app/
 │
 ├── .gitignore
 └── README.md
+🔐 Security Best Practices
 
-23. Important Files
+Never push the following files or information to GitHub:
 
-Backend
+❌ Database Password
+❌ AWS Access Keys
+❌ Private SSH Keys
+❌ .pem Files
+❌ Production .env Files
+❌ API Keys
+❌ RDS Credentials
 
-backend/
-├── src/
-│   └── main/
-│       ├── java/
-│       └── resources/
-│           └── application.properties
-├── Dockerfile
-└── pom.xml
+Use:
 
-Frontend
+.env
 
-frontend/
-├── src/
-├── public/
-├── Dockerfile
-├── package.json
-└── .env.example
+for local secrets.
 
-24. Security — Do Not Push Secrets
+Add .env to .gitignore.
 
-Never commit:
-
-DB password
-AWS access keys
-Private SSH keys
-.pem files
-Real production .env files
-API keys
-RDS credentials
-
-Instead create:
+Create:
 
 .env.example
 
@@ -599,94 +682,104 @@ Example:
 
 DB_PASSWORD=your_database_password
 VITE_API_URL=http://your-ec2-ip:8080/api
+🧪 Final Testing Checklist
+[✓] EC2 launched
+[✓] SSH connection working
+[✓] Ubuntu server ready
+[✓] Docker installed
+[✓] Git installed
+[✓] MySQL client installed
+[✓] RDS MySQL created
+[✓] student_db created
+[✓] RDS endpoint verified
+[✓] RDS Security Group configured
+[✓] EC2 Security Group configured
+[✓] Backend cloned
+[✓] Backend database configuration completed
+[✓] Backend Docker image created
+[✓] Backend container running
+[✓] Port 8080 configured
+[✓] Frontend API URL configured
+[✓] Frontend Docker image created
+[✓] Frontend container running
+[✓] Port 80 configured
+[✓] Website accessible
+[✓] Backend connected to RDS
+[✓] Data inserted through application
+[✓] Data verified in MySQL
+[✓] Secrets protected
+[✓] README documented
+[✓] Git commit created
+[✓] GitHub push completed
+📚 What I Learned
 
-The real .env should be ignored by Git.
+Through this project, I gained practical experience in:
 
-25. Project Learning Outcomes
-
-Through this project, I practiced:
-
-AWS EC2 provisioning
-
-Ubuntu server administration
-
-Amazon RDS MySQL setup
-
-MySQL database connectivity
-
-Security Group configuration
-
-Git repository cloning
-
-Docker image creation
-
-Docker container management
-
-Backend container deployment
-
-Frontend container deployment
-
-Frontend-to-backend API configuration
-
-Backend-to-RDS database connectivity
-
-Application troubleshooting
-
-Linux command-line operations
-
-End-to-end cloud deployment
-
-26. Technologies Used
-
-AWS
-├── EC2
-├── RDS MySQL
+AWS EC2
+Amazon RDS MySQL
+Ubuntu Linux Server
+Docker
+Docker Images
+Docker Containers
+Git & GitHub
+Security Groups
+MySQL Connectivity
+Spring Boot Backend Deployment
+Frontend Deployment
+REST API Communication
+Database Connectivity
+Cloud Networking
+Linux Server Administration
+Application Troubleshooting
+End-to-End Cloud Deployment
+🛠️ Technologies Used
+Cloud
+├── AWS EC2
+├── AWS RDS
+├── AWS VPC
 └── Security Groups
+
+Operating System
+└── Ubuntu Linux
 
 Application
 ├── Frontend
-├── Spring Boot Backend
-└── MySQL Database
+├── Spring Boot
+└── MySQL
 
-DevOps / Tools
-├── Linux / Ubuntu
+DevOps
 ├── Docker
-└── Git / GitHub
+├── Git
+└── GitHub
+🎯 Project Objective
 
-27. Final Deployment Checklist
+The main objective of this project was to understand how a real-world full-stack application can be deployed on AWS using Docker containers and connected to a managed MySQL database using Amazon RDS.
 
-[ ] EC2 launched
-[ ] SSH connection working
-[ ] Docker installed
-[ ] Git installed
-[ ] MySQL client installed
-[ ] RDS MySQL created
-[ ] student_db created
-[ ] RDS endpoint verified
-[ ] RDS Security Group configured
-[ ] Backend cloned
-[ ] application.properties configured
-[ ] Backend Docker image built
-[ ] Backend container running
-[ ] Port 8080 allowed
-[ ] Frontend API URL configured
-[ ] Frontend Docker image built
-[ ] Frontend container running
-[ ] Port 80 allowed
-[ ] Website accessible
-[ ] Data inserted through application
-[ ] Data verified in RDS
-[ ] Secrets excluded from Git
-[ ] README updated
-[ ] Git commit created
-[ ] GitHub push completed
+The project helped me understand the complete deployment flow:
 
-28. One-Line Project Summary
+Source Code
+    ↓
+GitHub
+    ↓
+AWS EC2
+    ↓
+Docker
+    ↓
+Frontend + Backend Containers
+    ↓
+Amazon RDS
+    ↓
+MySQL Database
+📝 Project Summary
 
-Deployed a full-stack Student Management Application on AWS EC2 using Docker containers, connected the Spring Boot backend to Amazon RDS MySQL, configured networking through Security Groups, and exposed the frontend through the EC2 server.
+Developed and deployed a full-stack Student Management Application on AWS EC2 using Docker containers. Configured a Spring Boot backend to connect with Amazon RDS MySQL, deployed the frontend through Docker, configured Security Groups for secure network communication, and verified end-to-end application-to-database connectivity.
 
-Author
-
+👨‍💻 Author
 Yash Pawar
 
 Cloud & DevOps | AWS | Linux | Docker | Git
+
+AWS • DevOps • Linux • Docker • Git • Cloud Networking
+⭐ Thank You for Visiting
+
+If you found this project useful, feel free to explore the repository and connect with me.
