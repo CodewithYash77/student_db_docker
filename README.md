@@ -1,4 +1,4 @@
-Student Management Application — AWS + Docker + MySQL RDS
+#Student Management Application — AWS + Docker + MySQL RDS
 
 A full-stack Student Management Application deployed on an AWS EC2 Ubuntu server using Docker, with MySQL hosted on Amazon RDS.
 
